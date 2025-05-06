@@ -1,6 +1,6 @@
 import { Heart, X, UserCircle } from 'lucide-react';
 
-const UserCard = ({ user }) => {
+const UCard = ({ user }) => {
   const { firstName, lastName, photoUrl, age, gender, about, location } = user;
 
   return (
@@ -23,19 +23,9 @@ const UserCard = ({ user }) => {
         <p className="text-gray-700 text-sm mt-3 italic">
           {about || "This user hasn't shared anything yet."}
         </p>
-    
-        <div className="mt-4 flex justify-center gap-4">
-          <button className="btn btn-outline btn-error flex items-center gap-1">
-            <X size={16} /> Ignore
-          </button>
-          <button className="btn btn-primary flex items-center gap-1">
-            <Heart size={16} /> Interested
-          </button>
-        </div>
-     
       </div>
     </div>
   );
 };
 
-export default UserCard;
+export default UCard;
