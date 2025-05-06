@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import UserCard from './UserCard';
+import Ucard from './Ucard';
 import axios from 'axios';
 import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
@@ -172,7 +172,7 @@ const EditProfile = ({ user }) => {
         </div>
       </div>
 
-      <UserCard
+      <Ucard
         user={{
           emailId,
           firstName,

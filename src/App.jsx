@@ -19,7 +19,7 @@ function App() {
               <Route path="/" element={<Feed />} />
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/connections" element={<Connections />} />
+              <Route path="/user/connections" element={<Connections />} />
               <Route path="/request" element={<Profile />} />
               <Route path="/create/team" element={<CreateTeam />} />
             </Route>
