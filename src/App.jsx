@@ -7,6 +7,7 @@ import Feed from "./components/Feed";
 import appStore from "./utils/appStore";
 import CreateTeam from "./ems/CreateTeam";
 import Connections from "./components/Connections";
+import Request from "./components/Request";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/user/connections" element={<Connections />} />
-              <Route path="/request" element={<Profile />} />
+              <Route path="/requests" element={<Request/>} />
               <Route path="/create/team" element={<CreateTeam />} />
             </Route>
           </Routes>

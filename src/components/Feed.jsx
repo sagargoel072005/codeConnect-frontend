@@ -7,7 +7,6 @@ import axios from "axios";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
-  console.log("feed",feed);
   const dispatch = useDispatch();
   const getFeed = async () => {
     if (feed && feed.length > 0) return;
@@ -15,7 +14,7 @@ const Feed = () => {
       const response = await axios.get(BASE_URL + "/feed", {
         withCredentials: true,
       });
-      console.log("response",response);
+  
       dispatch(addFeed(response?.data?.data));
     } catch (err) {
       console.error(err);
