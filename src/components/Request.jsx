@@ -13,13 +13,14 @@ const Request = () => {
   const reviewRequest = async (status, _id) => {
     try {
       const request = axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, {
-        withCredentials: true,}
+        withCredentials: true,
+      }
       );
-    dispatch(removeRequest());
+      dispatch(removeRequest());
     } catch (err) {
       console.error(err);
     }
-  } 
+  }
 
   const fetchRequest = async () => {
     try {
@@ -32,7 +33,7 @@ const Request = () => {
       console.error(err);
     }
   }
-  
+
   useEffect(() => {
     fetchRequest();
   }, []);
@@ -62,14 +63,13 @@ const Request = () => {
               <h2 className="text-xl font-semibold mb-2">{firstName} {lastName}</h2>
               <p className="text-gray-600 text-sm">{about}</p>
               <div className="flex justify-between p-6">
-                <button className="btn btn-outline btn-error flex items-center gap-1" 
-                onClick={() => reviewRequest("rejected", request._id)}>
-                  <X size={16} /> Ignore
+                <button className="btn btn-outline btn-error flex items-center gap-1"
+                  onClick={() => reviewRequest("rejected", request._id)}>
+                  <X size={16} /> Reject
                 </button>
                 <button className="btn btn-primary flex items-center gap-1"
-                onClick={() => reviewRequest("accepted", request._id)} >
-                 
-                  <Heart size={16} /> Interested
+                  onClick={() => reviewRequest("accepted", request._id)} >
+                  <Heart size={16} /> Accept
                 </button>
               </div>
             </div>
