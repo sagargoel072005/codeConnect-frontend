@@ -66,7 +66,7 @@ Body
         - updated DB password
         - allowed ec2 instance public IP on mongodb server
         - npm intsall pm2 -g
-        - pm2 start npm --name "devTinder-backend" -- start
+        - pm2 start npm --name "codeConnect-backend" -- start
         - pm2 logs
         - pm2 list, pm2 flush <name> , pm2 stop <name>, pm2 delete <name>
         - config nginx - /etc/nginx/sites-available/default
