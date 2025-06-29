@@ -69,7 +69,7 @@ Body
         - pm2 start npm --name "codeConnect-backend" -- start
         - pm2 logs
         - pm2 list, pm2 flush <name> , pm2 stop <name>, pm2 delete <name>
-        - config nginx - /etc/nginx/sites-available/default
+        - config nginx -sudo nano /etc/nginx/sites-available/default
         - restart nginx - sudo systemctl restart nginx
         - Modify the BASEURL in frontend project to "/api"
 
