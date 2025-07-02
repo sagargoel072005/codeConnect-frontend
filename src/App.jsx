@@ -8,6 +8,7 @@ import appStore from "./utils/appStore";
 import CreateTeam from "./ems/CreateTeam";
 import Connections from "./components/Connections";
 import Request from "./components/Request";
+import Premium from "./components/Premium";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/user/connections" element={<Connections />} />
               <Route path="/requests" element={<Request/>} />
               <Route path="/create/team" element={<CreateTeam />} />
+              <Route path="/premium" element={<Premium />} />
             </Route>
           </Routes>
         </BrowserRouter>

@@ -49,7 +49,7 @@ Body
     - Signup on AWS 
     - Launch instance
     - chmod 400 <secret>.pem
-    - ssh -i "devTinder-secret.pem" ubuntu@ec2-43-204-96-49.ap-south-1.compute.amazonaws.com
+    - ssh -i "codeconnect-secret.pem" ubuntu@ec2-13-61-174-105.eu-north-1.compute.amazonaws.com
     - Install Node version 16.17.0
     - Git clone
     - Frontend    
