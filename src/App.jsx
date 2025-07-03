@@ -9,6 +9,11 @@ import CreateTeam from "./ems/CreateTeam";
 import Connections from "./components/Connections";
 import Request from "./components/Request";
 import Premium from "./components/Premium";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import TermsAndConditions from "./components/TermsAndConditions";
+import CancellationAndRefundPolicy from "./components/Cancellation";
+import ShippingAndDeliveryPolicy from "./components/Shipping";
+import ContactUs from "./components/ContactUs";
 
 function App() {
   return (
@@ -25,6 +30,12 @@ function App() {
               <Route path="/requests" element={<Request/>} />
               <Route path="/create/team" element={<CreateTeam />} />
               <Route path="/premium" element={<Premium />} />
+               <Route path="/privacy/policy" element={<PrivacyPolicy />} />
+        <Route path="/terms/and/conditions" element={<TermsAndConditions />} />
+        <Route path="/cancellation/and/refund/policy" element={<CancellationAndRefundPolicy />} />
+        <Route path="/shipping/and/delivery/policy" element={<ShippingAndDeliveryPolicy />} />
+        <Route path="/contact/us" element={<ContactUs />} />
+
             </Route>
           </Routes>
         </BrowserRouter>
