@@ -37,7 +37,7 @@ const Footer = () => {
      <ul className="space-y-3">
             <li><button className="hover:underline">Gift Cards</button></li>
             <li>
-              <Link to="/terms/and/conditions" className="hover:underline">
+              <Link to="/terms-and-conditions" className="hover:underline">
                 Terms and Conditions
               </Link>
             </li>
@@ -47,22 +47,22 @@ const Footer = () => {
           <ul className="space-y-3">
             <li><button className="hover:underline">Media Centre</button></li>
             <li>
-              <Link to="/privacy/policy" className="hover:underline">
+              <Link to="/privacy-policy" className="hover:underline">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link to="/contact/us" className="hover:underline">
+              <Link to="/contact-us" className="hover:underline">
                 Contact Us
               </Link>
             </li>
           </ul>
 
   <div className="mt-6 text-center text-sm space-x-4">
-          <Link to="/cancellation/and/refund/policy" className="hover:underline">
+          <Link to="/cancellation-and-refund-policy" className="hover:underline">
             Cancellation & Refund Policy
           </Link>
-          <Link to="/shipping/and/delivery/policy" className="hover:underline">
+          <Link to="/shipping-and-delivery-policy" className="hover:underline">
             Shipping & Delivery Policy
           </Link>
         </div>
