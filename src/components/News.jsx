@@ -4,21 +4,20 @@ import Card from './Card';
 const Newsapp = () => {
   const [search, setSearch] = useState('');
   const [newsData, setNewsData] = useState(null);
-  const API_KEY = '23e3580a01e0409ab68cc249d1c91745';
+  const API_KEY = 'c63e8f9c5605fd4375ac62d68bdd6ad6'; // ✅ GNews API key
 
   const getData = async () => {
-    let query = 'technology';
+    let baseUrl = `https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&token=${API_KEY}`;
+
     if (search.trim() !== '') {
-      query += ` AND ${search.trim()}`;
+      baseUrl = `https://gnews.io/api/v4/search?q=${encodeURIComponent(search.trim())}&lang=en&topic=technology&token=${API_KEY}`;
     }
 
-    const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&apiKey=${API_KEY}`
-    );
-
+    const response = await fetch(baseUrl);
     const jsonData = await response.json();
     console.log(jsonData.articles);
-    let dt = jsonData.articles.slice(0, 10);
+
+    const dt = jsonData.articles.slice(0, 10);
     setNewsData(dt);
   };
 

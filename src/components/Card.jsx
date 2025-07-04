@@ -4,7 +4,7 @@ const Card = ({ data }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {data.map((curItem, index) => {
-        if (!curItem.urlToImage) return null;
+        if (!curItem.image) return null; // ✅ GNews uses "image"
 
         return (
           <div
@@ -12,7 +12,7 @@ const Card = ({ data }) => {
             className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
           >
             <img
-              src={curItem.urlToImage}
+              src={curItem.image} // ✅ Changed from urlToImage
               alt="news"
               className="h-48 w-full object-cover"
             />
