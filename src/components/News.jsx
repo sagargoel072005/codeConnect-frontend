@@ -4,7 +4,7 @@ import Card from './Card';
 const Newsapp = () => {
   const [search, setSearch] = useState('');
   const [newsData, setNewsData] = useState(null);
-  const API_KEY = '9c3ed8ee95884dec979460a60f96675b';
+  const API_KEY = '23e3580a01e0409ab68cc249d1c91745';
 
   const getData = async () => {
     let query = 'technology';
@@ -13,7 +13,7 @@ const Newsapp = () => {
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${query}&language=en&sortBy=publishedAt&apiKey=${API_KEY}`
+      `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&apiKey=${API_KEY}`
     );
 
     const jsonData = await response.json();
