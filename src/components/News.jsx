@@ -13,9 +13,7 @@ const Newsapp = () => {
     }
 
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${encodeURIComponent(
-        query
-      )}&language=en&sortBy=publishedAt&apiKey=${API_KEY}`
+      `https://newsapi.org/v2/everything?q=${query}&language=en&sortBy=publishedAt&apiKey=${API_KEY}`
     );
 
     const jsonData = await response.json();
