@@ -60,8 +60,12 @@ const Navbar = () => {
                 <Link to="/requests">Requests</Link>
               </li>
                <li>
-                <Link to="/premium">Requests</Link>
+                <Link to="/premium">Premium</Link>
               </li>
+                <li>
+                <Link to="/tech-news">News</Link>
+              </li>
+
               <li><a onClick={handleLogout}>Logout</a></li>
             </ul>
           </div>

@@ -14,6 +14,7 @@ import TermsAndConditions from "./components/TermsAndConditions";
 import CancellationAndRefundPolicy from "./components/Cancellation";
 import ShippingAndDeliveryPolicy from "./components/Shipping";
 import ContactUs from "./components/ContactUs";
+import Newsapp from "./components/News";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/cancellation-and-refund-policy" element={<CancellationAndRefundPolicy />} />
         <Route path="/shipping-and-delivery-policy" element={<ShippingAndDeliveryPolicy />} />
         <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/tech-news" element={<Newsapp />} />
 
             </Route>
           </Routes>
