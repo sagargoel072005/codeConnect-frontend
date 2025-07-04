@@ -7,7 +7,7 @@ const Newsapp = () => {
   const API_KEY = 'c63e8f9c5605fd4375ac62d68bdd6ad6'; // ✅ GNews API key
 
   const getData = async () => {
-    let baseUrl = `https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&token=${API_KEY}`;
+    let baseUrl = `https://gnews.io/api/v4/top-headlines?q=developer%20OR%20programming%20OR%20coding%20OR%20AI%20OR%20machine%20learning%20OR%20cloud%20OR%20startup%20OR%20opensource&lang=en&topic=technology&lang=en&token=${API_KEY}`;
 
     if (search.trim() !== '') {
       baseUrl = `https://gnews.io/api/v4/search?q=${encodeURIComponent(search.trim())}&lang=en&topic=technology&token=${API_KEY}`;
@@ -17,7 +17,7 @@ const Newsapp = () => {
     const jsonData = await response.json();
     console.log(jsonData.articles);
 
-    const dt = jsonData.articles.slice(0, 10);
+    const dt = jsonData.articles.slice(0,9);
     setNewsData(dt);
   };
 
