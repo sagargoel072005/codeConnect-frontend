@@ -25,48 +25,28 @@ const Footer = () => {
         {/* Footer Links */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-sm text-center">
           <ul className="space-y-3">
-            <li><button className="hover:underline">Audio Description</button></li>
-            <li><button className="hover:underline">Investor Relations</button></li>
-            <li><button className="hover:underline">Legal Notices</button></li>
-          </ul>
-          <ul className="space-y-3">
-            <li><button className="hover:underline">Help Centre</button></li>
-            <li><button className="hover:underline">Jobs</button></li>
-            <li><button className="hover:underline">Cookie Preferences</button></li>
-          </ul>
-     <ul className="space-y-3">
-            <li><button className="hover:underline">Gift Cards</button></li>
-            <li>
-              <Link to="/terms-and-conditions" className="hover:underline">
-                Terms and Conditions
-              </Link>
-            </li>
-            <li><button className="hover:underline">Corporate Information</button></li>
+            <li><Link to="/terms-and-conditions" className="hover:underline">Terms and Conditions</Link></li>
+            <li><Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link></li>
+            <li><Link to="/contact-us" className="hover:underline">Contact Us</Link></li>
           </ul>
 
           <ul className="space-y-3">
-            <li><button className="hover:underline">Media Centre</button></li>
-            <li>
-              <Link to="/privacy-policy" className="hover:underline">
-                Privacy Policy
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact-us" className="hover:underline">
-                Contact Us
-              </Link>
-            </li>
+            <li><Link to="/cancellation-and-refund-policy" className="hover:underline">Cancellation</Link></li>
+            <li><Link to="/shipping-and-delivery-policy" className="hover:underline">Shipping</Link></li>
+          <li><Link to="/media-centre" className="hover:underline">Media Centre</Link></li>
           </ul>
 
-  <div className="mt-6 text-center text-sm space-x-4">
-          <Link to="/cancellation-and-refund-policy" className="hover:underline">
-            Cancellation & Refund Policy
-          </Link>
-          <Link to="/shipping-and-delivery-policy" className="hover:underline">
-            Shipping & Delivery Policy
-          </Link>
-        </div>
 
+          <ul className="space-y-3">
+            <li><Link to="/cancellation-and-refund-policy" className="hover:underline">Refund Policy</Link></li>
+            <li><Link to="/media-centre" className="hover:underline">Media Centre</Link></li>
+            <li><Link to="/shipping-and-delivery-policy" className="hover:underline">Delivery Policy</Link></li>
+          </ul>
+                    <ul className="space-y-3">
+            <li><Link to="/terms-and-conditions" className="hover:underline">Terms and Conditions</Link></li>
+            <li><Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link></li>
+            <li><Link to="/contact-us" className="hover:underline">Contact Us</Link></li>
+          </ul>
 
         </div>
 

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { FaCrown, FaMedal } from 'react-icons/fa';
 import { useEffect, useState } from "react";
 import { BASE_URL } from '../utils/constants';
+import VideoLogin from './VideoLogin';
 
 const Premium = () => {
 
@@ -10,11 +11,11 @@ const Premium = () => {
     verifyPremiumUser();
   }, []);
 
-    const verifyPremiumUser = async () => {
+  const verifyPremiumUser = async () => {
     const res = await axios.get(BASE_URL + "/premium/verify", {
       withCredentials: true,
     });
-console.log(res.data); // should now show isPremium: true
+    console.log(res.data); // should now show isPremium: true
     if (res.data.isPremium) {
       setIsUserPremium(true);
     }
@@ -57,8 +58,8 @@ console.log(res.data); // should now show isPremium: true
   };
 
   return isUserPremium ? (
-    "You're are already a premium user"
-  ) :  (
+    <VideoLogin />
+  ) : (
     <div className="m-10">
       <div className="flex w-full flex-col lg:flex-row items-center justify-center gap-8">
 

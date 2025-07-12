@@ -179,3 +179,9 @@ Press Ctrl + X → This means Exit Nano.
     - Project Idea 2 : Chess
 
     https://newsapi.org/v2/everything?q=trending&apiKey=9c3ed8ee95884dec979460a60f96675b
+
+
+
+
+
+    
