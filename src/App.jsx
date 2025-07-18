@@ -18,7 +18,7 @@ import Newsapp from "./components/News";
 import Chat from "./components/Chat";
 import MediaCentre from "./footer/MediaCentre";
 import RoomPage from "./components/Room";
-import { SocketContext } from "./context/SocketContext";
+import { SocketProvider } from "./context/SocketContext";
 import { createSocketConnection } from "./utils/socket";
 const socket = createSocketConnection();
 
@@ -26,7 +26,7 @@ function App() {
   return (
     <>
       <Provider store={appStore}>
-        <SocketContext.Provider value={{socket}}>
+ <SocketProvider>
         <BrowserRouter basename="/">
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -50,7 +50,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-              </SocketContext.Provider>
+         </SocketProvider>
       </Provider>
     </>
   )

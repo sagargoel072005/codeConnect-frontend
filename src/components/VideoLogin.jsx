@@ -1,54 +1,34 @@
-// src/components/VideoLogin.jsx
-import React, { useState, useCallback, useEffect,useContext } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { SocketContext } from "../context/SocketContext";
+import { useSocket } from "../context/SocketContext";
+
 const VideoLogin = () => {
   const [email, setEmail] = useState("");
   const [room, setRoom] = useState("");
   const navigate = useNavigate();
-  const { socket } = useContext(SocketContext);
+  const { socket } = useSocket();
+
+  const handleSubmitForm = useCallback((e) => {
+    e.preventDefault();
+    socket.emit("room:join", { email, room });
+  }, [email, room, socket]);
+
+  const handleJoinRoom = useCallback(({ email, room }) => {
+    navigate(`/room/${room}`);
+  }, [navigate]);
 
   useEffect(() => {
-    if (!socket) return;
-
-    console.log("👉 Initial socket state:", socket.connected);
-
-    socket.on("connect", () => {
-      console.log("✅ Socket connected!", socket.id);
-    });
-
-    socket.on("disconnect", () => {
-      console.log("❌ Socket disconnected");
-    });
-
-    socket.on("room:join", ({ room }) => {
-      navigate(`/room/${room}`);
-    });
-
+    socket.on("room:join", handleJoinRoom);
     return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("room:join");
+      socket.off("room:join", handleJoinRoom);
     };
-  }, [socket, navigate]);
-
-  const handleSubmitForm = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (!email || !room) {
-        alert("Please fill in both email and room number.");
-        return;
-      }
-      socket.emit("room:join", { email, room });
-    },
-    [email, room, socket]
-  );
+  }, [socket, handleJoinRoom]);
 
   return (
     <div>
-      <h1>Video</h1>
+      <h1>Lobby</h1>
       <form onSubmit={handleSubmitForm}>
-        <label htmlFor="email">Email Id</label>
+        <label htmlFor="email">Email ID</label>
         <input
           type="email"
           id="email"
@@ -56,7 +36,7 @@ const VideoLogin = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <br />
-        <label htmlFor="room">Room No</label>
+        <label htmlFor="room">Room Number</label>
         <input
           type="text"
           id="room"
