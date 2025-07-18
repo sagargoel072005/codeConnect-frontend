@@ -47,12 +47,6 @@ const Navbar = () => {
               </li>
 
               <li>
-                <Link to="/create/team" className="justify-between">
-                  Create a team +
-                </Link>
-              </li>
-
-              <li>
                 <Link to="/user/connections">Connections</Link>
               </li>
 

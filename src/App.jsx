@@ -5,7 +5,6 @@ import Profile from "./components/Profile";
 import { Provider } from "react-redux";
 import Feed from "./components/Feed";
 import appStore from "./utils/appStore";
-import CreateTeam from "./ems/CreateTeam";
 import Connections from "./components/Connections";
 import Request from "./components/Request";
 import Premium from "./components/Premium";
@@ -36,7 +35,6 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/user/connections" element={<Connections />} />
               <Route path="/requests" element={<Request />} />
-              <Route path="/create/team" element={<CreateTeam />} />
               <Route path="/premium" element={<Premium />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
