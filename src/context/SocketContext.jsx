@@ -4,11 +4,7 @@ import { io } from "socket.io-client";
 import { BASE_URL } from "../utils/constants";
 
 export const SocketContext = createContext(null);
-
-const socket = io( BASE_URL, {
-  withCredentials: true,
-  transports: ["websocket", "polling"]
-});
+const socket = location.hostname === "localhost" ? io("http://localhost:7777") : io("/", { path: "/api/socket.io" }); 
 
 export const SocketProvider = ({ children }) => {
   return (
