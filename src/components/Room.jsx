@@ -13,21 +13,21 @@ const RoomPage = () => {
   const myVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
 
-  // ✅ Attach local stream to video element
+
   useEffect(() => {
     if (myVideoRef.current && myStream) {
       myVideoRef.current.srcObject = myStream;
     }
   }, [myStream]);
 
-  // ✅ Attach remote stream to video element
+
   useEffect(() => {
     if (remoteVideoRef.current && remoteStream) {
       remoteVideoRef.current.srcObject = remoteStream;
     }
   }, [remoteStream]);
 
-  // ✅ Get user media on component mount
+
   useEffect(() => {
 const startCamera = async () => {
   try {
@@ -45,7 +45,7 @@ const startCamera = async () => {
     startCamera();
   }, []);
 
-  // ✅ Handle when another user joins
+
 const handleUserJoined = useCallback(
   ({ email, id }) => {
     console.log(`User joined: ${email} , ${id}`);
@@ -55,7 +55,6 @@ const handleUserJoined = useCallback(
 );
 
 
-  // ✅ Handle outgoing call
   const handleCallUser = useCallback(async () => {
     if (!peerService || !remoteSocketId) return;
     console.log("📞 Calling user now...");
@@ -63,12 +62,28 @@ const handleUserJoined = useCallback(
     socket.emit("user:call", { to: remoteSocketId, offer });
   }, [peerService, remoteSocketId, socket]);
 
-  // ✅ Handle incoming call
+
 const handleIncommingCall = useCallback(
   async ({ from, offer }) => {
     console.log("📞 Incoming call from:", from);
 
-    if (peerService) return; // Don’t recreate
+if (!peerService) {
+  const peer = new PeerService(socket, from);
+  setPeerService(peer); // ✅ 📌 Fix 1A — Set it EARLY
+  peer.setOnTrackCallback((event) => {
+    console.log("📥 Track received (incoming)");
+    setRemoteStream(event.streams[0]);
+  });
+
+  myStream.getTracks().forEach((track) =>
+    peer.peer.addTrack(track, myStream)
+  );
+
+  await peer.setRemoteDescription(offer);
+  const ans = await peer.getAnswer();
+  socket.emit("call:accepted", { to: from, ans });
+}
+
 
     const peer = new PeerService(socket, from);
     peer.setOnTrackCallback((event) => {
@@ -107,6 +122,20 @@ const handleIceCandidate = useCallback(
   [peerService]
 );
 
+const handlePeerHangedUp = useCallback(() => {
+  console.log("Peer has disconnected the call.");
+  if (myStream) {
+    myStream.getTracks().forEach((track) => track.stop());
+  }
+  if (peerService) {
+    peerService.peer.close();
+  }
+  setMyStream(null);
+  setRemoteStream(null);
+  setPeerService(null);
+  setRemoteSocketId(null);
+}, [myStream, peerService]);
+
   // ✅ Handle disconnection
   const handleUserDisconnected = useCallback(({ id }) => {
     console.log(`❌ User disconnected: ${id}`);
@@ -114,6 +143,31 @@ const handleIceCandidate = useCallback(
     setRemoteStream(null);
     setPeerService(null);
   }, []);
+
+  const handleHangUp = useCallback(() => {
+  if (myStream) {
+    // Stop all media tracks
+    myStream.getTracks().forEach((track) => track.stop());
+  }
+  if (peerService) {
+    // Close the WebRTC connection
+    peerService.peer.close();
+  }
+
+  // Notify the other user (optional but good practice)
+  if(socket && remoteSocketId) {
+    socket.emit("user:hangup", { to: remoteSocketId });
+  }
+
+  // Reset all state
+  setMyStream(null);
+  setRemoteStream(null);
+  setPeerService(null);
+  setRemoteSocketId(null);
+  
+  // Optionally, navigate back to the lobby
+  // navigate('/');
+}, [myStream, peerService, remoteSocketId, socket]);
 
   // ✅ Register socket listeners
   useEffect(() => {
@@ -150,6 +204,12 @@ useEffect(() => {
     myStream.getTracks().forEach((track) => peer.peer.addTrack(track, myStream));
     setPeerService(peer);
 
+    peer.setOnTrackCallback((event) => {
+  console.log("📥 Track received (auto-call)");
+  setRemoteStream(event.streams[0]); // ✅ 📌 Fix 2
+});
+
+
     const startCall = async () => {
       const offer = await peer.getOffer();
       socket.emit("user:call", { to: remoteSocketId, offer });
@@ -176,60 +236,84 @@ useEffect(() => {
   return () => socket.off("room:users");
 }, [socket]);
 
+useEffect(() => {
+  // ... other listeners
+  socket.on("peer:hangedup", handlePeerHangedUp);
+  return () => {
+    
+    socket.off("peer:hangedup", handlePeerHangedUp);
+  };
+}, [socket, handlePeerHangedUp]);
+
 return (
-  <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center justify-start">
-    <h2 className="text-3xl font-semibold mb-4 text-center text-blue-600">📹 Video Call Room</h2>
-
-    <div className="mb-6 text-center">
-      {remoteSocketId ? (
-        <span className="text-green-600 font-medium">✅ Connected to peer</span>
-      ) : (
-        <span className="text-yellow-500 font-medium">🕓 Waiting for other user...</span>
-      )}
-    </div>
-
-    <div className="flex flex-wrap justify-center gap-8 mb-6">
-      <div className="flex flex-col items-center">
-        <video
-          ref={myVideoRef}
-          autoPlay
-          muted
-          playsInline
-          className="w-80 h-60 bg-black rounded-lg shadow-md"
-        />
-        <p className="mt-2 font-semibold">You</p>
+  <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col">
+    <header className="mb-4 text-center">
+      <h2 className="text-3xl font-semibold">📹 Video Call</h2>
+      <div className="mt-2">
+        {remoteSocketId ? (
+          <span className="text-green-400 font-medium">✅ Peer Connected</span>
+        ) : (
+          <span className="text-yellow-400 font-medium">⌛ Waiting for a peer to join...</span>
+        )}
       </div>
+    </header>
 
+    {/* Video Grid */}
+    <div className="flex-1 flex flex-wrap justify-center items-center gap-8 p-4">
+      {/* My Video */}
+      {myStream && (
+        <div className="flex flex-col items-center">
+          <video
+            ref={myVideoRef}
+            autoPlay
+            muted
+            playsInline
+            className="w-full max-w-lg bg-black rounded-lg shadow-2xl ring-2 ring-blue-500"
+          />
+          <p className="mt-2 font-semibold">You</p>
+        </div>
+      )}
+
+      {/* Remote Video */}
       {remoteStream && (
         <div className="flex flex-col items-center">
           <video
             ref={remoteVideoRef}
             autoPlay
             playsInline
-            className="w-80 h-60 bg-black rounded-lg shadow-md"
+            className="w-full max-w-lg bg-black rounded-lg shadow-2xl"
           />
           <p className="mt-2 font-semibold">Peer</p>
         </div>
       )}
     </div>
 
-    {remoteSocketId && (
-      <button
-        onClick={handleCallUser}
-        className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-lg font-medium transition"
-      >
-        📞 Call
-      </button>
-    )}
+    {/* Controls */}
+    <footer className="py-4 flex justify-center items-center gap-4">
+      {myStream && !remoteStream && remoteSocketId && (
+        <button
+          onClick={handleCallUser}
+          className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full text-lg font-medium transition shadow-lg flex items-center gap-2"
+        >
+          📞 Call Peer
+        </button>
+      )}
+      {/* The "Cut Call" button from the next step will go here */}
+       {remoteStream && (
+    <button
+      onClick={handleHangUp}
+      className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full text-lg font-medium transition shadow-lg flex items-center gap-2"
+    >
+      ☎️ Hang Up
+    </button>
+  )}
+    </footer>
   </div>
 );
 
 };
 
 export default RoomPage;
-
-
-
 
 /**import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
@@ -391,4 +475,4 @@ export default function RoomPage() {
     </div>
   );
 }
- */
+****/

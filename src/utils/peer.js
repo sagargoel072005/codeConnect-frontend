@@ -12,15 +12,15 @@ class PeerService {
     this.onTrack = null;
     this.pendingCandidates = [];
 
-    this.peer.onicecandidate = (event) => {
-      if (event.candidate) {
-        console.log("📡 ICE Candidate generated");
-        this.socket.emit("peer:ice-candidate", {
-          to: this.remoteSocketId,
-          candidate: event.candidate
-        });
-      }
-    };
+this.peer.onicecandidate = (event) => {
+  if (event.candidate && this.remoteSocketId) {
+    this.socket.emit("ice-candidate", {
+      to: this.remoteSocketId,
+      candidate: event.candidate,
+    });
+  }
+};
+
 
     this.peer.ontrack = (event) => {
       console.log("📡 Got remote stream!");
