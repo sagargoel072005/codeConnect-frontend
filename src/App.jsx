@@ -19,6 +19,7 @@ import MediaCentre from "./footer/MediaCentre";
 import RoomPage from "./components/Room";
 import { SocketProvider } from "./context/SocketContext";
 import { createSocketConnection } from "./utils/socket";
+import VideoLogin from "./components/VideoLogin";
 const socket = createSocketConnection();
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
               <Route path="/tech-news" element={<Newsapp />} />
               <Route path="/media-centre" element={<MediaCentre />} />
               <Route path="/chat/:targetUserId" element={<Chat />} />
+             <Route path="/video-login" element={<VideoLogin />} />
               <Route path="/room/:roomId" element={<RoomPage />} />
             </Route>
           </Routes>

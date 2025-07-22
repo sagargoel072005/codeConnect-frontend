@@ -4,7 +4,7 @@ import axios from 'axios';
 import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const EditProfile = ({ user }) => {
@@ -20,13 +20,12 @@ const EditProfile = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
+ const navigate = useNavigate();
 
   const saveProfile = async () => {
     try {
       setLoading(true);
       setError("");
-
-      //   const skillsArray = skills.split(",").map(s => s.trim()).filter(Boolean);
 
       const res = await axios.patch(
         BASE_URL + "/profile/edit", {
@@ -45,8 +44,9 @@ const EditProfile = ({ user }) => {
       dispatch(addUser(res?.data?.data));
       setShowToast(true);
       const i = setTimeout(() => {
-        setShowToast(false)
-      },2000);
+          setShowToast(false);
+        navigate('/premium'); 
+ }, 2000);
     
     } catch (err) {
       setError(err.response?.data?.message || err.message);
@@ -188,7 +188,7 @@ const EditProfile = ({ user }) => {
     {showToast && (
       <div className="toast toast-top toast-center">
   <div className="alert alert-success">
-    <span>Profile updated successfully.</span>
+    <span>Profile updated successfully. Redirecting...</span>
   </div>
 </div>
     )}
