@@ -12,15 +12,13 @@ const Request = () => {
 
   const reviewRequest = async (status, _id) => {
     try {
-      // Note: You might want to remove the specific request from the store
-      // instead of clearing all of them.
-      // dispatch(removeRequest(_id));
+     
       await axios.post(
         `${BASE_URL}/request/review/${status}/${_id}`,
         {},
         { withCredentials: true }
       );
-      // After success, refetch or remove from state to update the UI
+   
       fetchRequest(); 
     } catch (err) {
       console.error(err);

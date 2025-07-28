@@ -16,7 +16,6 @@ const Chat = () => {
   const userId = user?._id;
   const messagesEndRef = useRef(null);
 
-  // Fetch chat messages from your backend
   const fetchChatMessages = async () => {
     try {
       const chat = await axios.get(`${BASE_URL}/chat/${targetUserId}`, {
@@ -44,10 +43,8 @@ const Chat = () => {
     fetchChatMessages();
   }, []);
 
-  // Real-time socket connection
   useEffect(() => {
     if (!userId) return;
-
     const socket = createSocketConnection();
     socket.emit("joinChat", {
       firstName: user.firstName,
