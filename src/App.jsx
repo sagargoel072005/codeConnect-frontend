@@ -44,8 +44,6 @@ function App() {
               <Route path="/media-centre" element={<MediaCentre />} />
               <Route path="/chat/:targetUserId" element={<Chat />} />
              <Route path="/video-login" element={<VideoCall />} />
-        <Route path="/auth/google/callback" element={<Navigate to="/profile" replace />} />
-
             </Route>
           </Routes>
         </BrowserRouter>

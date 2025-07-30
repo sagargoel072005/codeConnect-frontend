@@ -30,19 +30,19 @@ const Login = () => {
   };
 
   const handleSignup = async () => {
-    try{
+    try {
       const res = await axios.post(BASE_URL + "/signup", {
         emailId,
         password,
-        firstName, 
+        firstName,
         lastName,
       }, { withCredentials: true });
       dispatch(addUser(res.data.data));
       return navigate("/profile");
     }
-      catch(err){
-        setError(err?.response?.data || "something went wrong");
-      }
+    catch (err) {
+      setError(err?.response?.data || "something went wrong");
+    }
   }
 
   return (
@@ -107,30 +107,13 @@ const Login = () => {
           </div>
 
           <p
-  className=" m-auto mt-1 text-blue-600 hover:text-blue-800 cursor-pointer font-medium transition duration-200 ease-in-out hover:scale-105"
-  onClick={() => setIsLoginForm(value => !value)}
->
-  {isLoginForm
-    ? "Don't have an account? Sign up here."
-    : "Already have an account? Log in here."}
-</p>
-
-<div className="card-actions justify-center">
-  <button
-    className="btn btn-outline w-full mt-2"
-    onClick={() => {
-      window.open(`${BASE_URL}/google`, "_self"); // triggers Google login
-    }}
-  >
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Google_%22G%22_Logo.svg"
-      alt="Google"
-      className="w-5 h-5 mr-2"
-    />
-    Sign in with Google
-  </button>
-</div>
-
+            className=" m-auto mt-1 text-blue-600 hover:text-blue-800 cursor-pointer font-medium transition duration-200 ease-in-out hover:scale-105"
+            onClick={() => setIsLoginForm(value => !value)}
+          >
+            {isLoginForm
+              ? "Don't have an account? Sign up here."
+              : "Already have an account? Log in here."}
+          </p>
         </div>
       </div>
     </div>
