@@ -16,7 +16,6 @@ import ContactUs from "./footer/ContactUs";
 import Newsapp from "./components/News";
 import Chat from "./components/Chat";
 import MediaCentre from "./footer/MediaCentre";
-import { Navigate } from "react-router-dom";
 import { createSocketConnection } from "./utils/socket";
 import VideoCall from "./components/VideoCall";
 const socket = createSocketConnection();
