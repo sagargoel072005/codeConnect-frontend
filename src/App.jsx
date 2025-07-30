@@ -16,17 +16,15 @@ import ContactUs from "./footer/ContactUs";
 import Newsapp from "./components/News";
 import Chat from "./components/Chat";
 import MediaCentre from "./footer/MediaCentre";
-import RoomPage from "./components/Room";
-import { SocketProvider } from "./context/SocketContext";
+import { Navigate } from "react-router-dom";
 import { createSocketConnection } from "./utils/socket";
-import VideoLogin from "./components/VideoLogin";
+import VideoCall from "./components/VideoCall";
 const socket = createSocketConnection();
 
 function App() {
   return (
     <>
       <Provider store={appStore}>
- <SocketProvider>
         <BrowserRouter basename="/">
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -45,12 +43,12 @@ function App() {
               <Route path="/tech-news" element={<Newsapp />} />
               <Route path="/media-centre" element={<MediaCentre />} />
               <Route path="/chat/:targetUserId" element={<Chat />} />
-             <Route path="/video-login" element={<VideoLogin />} />
-              <Route path="/room/:roomId" element={<RoomPage />} />
+             <Route path="/video-login" element={<VideoCall />} />
+        <Route path="/auth/google/callback" element={<Navigate to="/profile" replace />} />
+
             </Route>
           </Routes>
         </BrowserRouter>
-         </SocketProvider>
       </Provider>
     </>
   )

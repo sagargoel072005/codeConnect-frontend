@@ -115,6 +115,22 @@ const Login = () => {
     : "Already have an account? Log in here."}
 </p>
 
+<div className="card-actions justify-center">
+  <button
+    className="btn btn-outline w-full mt-2"
+    onClick={() => {
+      window.open(`${BASE_URL}/google`, "_self"); // triggers Google login
+    }}
+  >
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Google_%22G%22_Logo.svg"
+      alt="Google"
+      className="w-5 h-5 mr-2"
+    />
+    Sign in with Google
+  </button>
+</div>
+
         </div>
       </div>
     </div>
