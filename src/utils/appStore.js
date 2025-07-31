@@ -10,11 +10,11 @@ const appStore = configureStore({
     reducer: {
         user: userReducer,
         feed: feedReducer,
-        connections : connectionReducer,
-        request : requestReducer,
-         token: tokenReducer,
+        connections: connectionReducer,
+        request: requestReducer,
+        token: tokenReducer,
         agora: agoraReducer,
-    }, 
+    },
 });
 
 export default appStore;

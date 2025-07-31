@@ -17,7 +17,9 @@ const VideoCall = () => {
   const uidRef = useRef(Math.floor(Math.random() * 100000));
 
   useEffect(() => {
-    if (joined && channelName) dispatch(fetchToken({ channel: channelName, uid: uidRef.current }));
+    if (joined && channelName) {
+      dispatch(fetchToken({ channel: channelName, uid: uidRef.current }));
+    }
   }, [joined]);
 
   useEffect(() => {
@@ -32,16 +34,19 @@ const VideoCall = () => {
 
       if (mediaType === "video") {
         let remoteContainer = document.getElementById(remoteId);
-        if (!remoteContainer) {
+        if (!remoteContainer && typeof window !== "undefined") {
           remoteContainer = document.createElement("div");
           remoteContainer.id = remoteId;
-          remoteContainer.className = "w-full sm:w-[300px] h-[200px] bg-gray-900 rounded-lg shadow";
+          remoteContainer.className =
+            "w-full sm:w-[300px] h-[200px] bg-gray-900 rounded-lg shadow";
           document.getElementById("remote-playerlist")?.appendChild(remoteContainer);
         }
         user.videoTrack?.play(remoteContainer);
       }
 
-      if (mediaType === "audio") user.audioTrack?.play();
+      if (mediaType === "audio") {
+        user.audioTrack?.play();
+      }
     });
 
     client.on("user-unpublished", (user) => {
@@ -58,8 +63,13 @@ const VideoCall = () => {
         const [audioTrack, videoTrack] = await AgoraRTC.createMicrophoneAndCameraTracks();
         localTracksRef.current = { audioTrack, videoTrack };
 
-        const localDiv = document.getElementById("local-player");
-        if (localDiv) videoTrack.play(localDiv);
+        // DOM safe check before playing local video
+        if (typeof window !== "undefined") {
+          const localDiv = document.getElementById("local-player");
+          if (localDiv) {
+            videoTrack.play(localDiv);
+          }
+        }
 
         await client.publish([audioTrack, videoTrack]);
       } catch (err) {
@@ -68,6 +78,10 @@ const VideoCall = () => {
     };
 
     start();
+
+    return () => {
+      client.removeAllListeners();
+    };
   }, [token, joined]);
 
   const joinChannel = () => {
@@ -93,11 +107,13 @@ const VideoCall = () => {
       }
 
       await client.leave();
-      document.getElementById("remote-playerlist").innerHTML = "";
+      if (typeof window !== "undefined") {
+        const remoteContainer = document.getElementById("remote-playerlist");
+        if (remoteContainer) remoteContainer.innerHTML = "";
+      }
 
       localStorage.removeItem("joined");
       localStorage.removeItem("channel");
-
       setJoined(false);
       setChannelName("");
     } catch (error) {
