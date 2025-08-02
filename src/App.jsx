@@ -18,17 +18,17 @@ import Chat from "./components/Chat";
 import MediaCentre from "./footer/MediaCentre";
 import { createSocketConnection } from "./utils/socket";
 import VideoCall from "./components/VideoCall";
+import CodeConnectLandingPage from "./components/CodeConnectLandingPage";
 const socket = createSocketConnection();
-
 function App() {
   return (
     <>
       <Provider store={appStore}>
-        <BrowserRouter basename="/">
+        <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<CodeConnectLandingPage />} />
+                    <Route path="/login" element={<Login />} />
             <Route element={<Body />}>
-              <Route path="/" element={<Feed />} />
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/user/connections" element={<Connections />} />
@@ -42,7 +42,7 @@ function App() {
               <Route path="/tech-news" element={<Newsapp />} />
               <Route path="/media-centre" element={<MediaCentre />} />
               <Route path="/chat/:targetUserId" element={<Chat />} />
-             <Route path="/video-login" element={<VideoCall />} />
+              <Route path="/video-login" element={<VideoCall />} />
             </Route>
           </Routes>
         </BrowserRouter>

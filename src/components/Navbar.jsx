@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
+import { Code2 } from "lucide-react";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user); // <- ensure correct key!
@@ -21,9 +22,13 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-gray-200">
-      <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">codeConnect</Link>
-      </div>
+<div className="flex-1">
+  <Link to="/feed" className="btn btn-ghost text-xl">
+    <Code2 className="text-blue-600" />
+  </Link>
+  <span className="font-bold">CodeConnect</span>
+</div>
+
       <div className="flex-none">
         {user && (
           <div className="dropdown dropdown-end">
@@ -39,13 +44,14 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
+            {user.isPremium &&(
               <li>
                 <Link to="/profile" className="justify-between">
                   Profile
                   <span className="badge">New</span>
                 </Link>
               </li>
-
+        )}
               <li>
                 <Link to="/user/connections">Connections</Link>
               </li>
@@ -53,10 +59,10 @@ const Navbar = () => {
               <li>
                 <Link to="/requests">Requests</Link>
               </li>
-               <li>
+              <li>
                 <Link to="/premium">Premium</Link>
               </li>
-                <li>
+              <li>
                 <Link to="/tech-news">News</Link>
               </li>
 

@@ -1,12 +1,13 @@
-import { useState } from "react"
+import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
+import { motion } from "framer-motion";
+import { EnvelopeIcon, LockClosedIcon, UserIcon } from "@heroicons/react/24/solid";
 
 const Login = () => {
-
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -23,9 +24,9 @@ const Login = () => {
         password,
       }, { withCredentials: true });
       dispatch(addUser(res.data));
-      return navigate("/");
+      navigate("/feed");
     } catch (err) {
-      setError(err?.response?.data || "something went wrong");
+      setError(err?.response?.data || "Something went wrong");
     }
   };
 
@@ -38,87 +39,94 @@ const Login = () => {
         lastName,
       }, { withCredentials: true });
       dispatch(addUser(res.data.data));
-      return navigate("/profile");
+      navigate("/profile");
+    } catch (err) {
+      setError(err?.response?.data || "Something went wrong");
     }
-    catch (err) {
-      setError(err?.response?.data || "something went wrong");
-    }
-  }
+  };
 
   return (
-    <div className="flex justify-center pt-10">
-      <div className="card bg-gray-300 w-96">
-        <div className="card-body">
-          <h2 className="card-title justify-center">
-            {isLoginForm ? "Login" : "Signup"}
-          </h2>
-          <div className="flex flex-col space-y-4">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-100 to-blue-200">
+      <motion.div
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 100 }}
+        className="w-[95%] md:w-[400px] bg-white p-6 shadow-2xl rounded-2xl"
+      >
+        <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">
+          {isLoginForm ? "Welcome Back!" : "Create an Account"}
+        </h2>
 
-            {!isLoginForm && <>
-              <label className='form-control w-full max-w-xs'>
-                <div className='label'>
-                  <span className='label-text'>First Name</span>
-                </div>
-                <input type='text'
+        <div className="space-y-4">
+          {!isLoginForm && (
+            <>
+              <div className="relative">
+                <UserIcon className="h-5 w-5 text-gray-400 absolute left-3 top-3.5" />
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  className="input input-bordered w-full pl-10"
                   value={firstName}
-                  className='input input-bordered w-full max-w-xs'
-                  onChange={(e) => setFirstName(e.target.value)} />
-              </label>
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
 
-              <label className='form-control w-full max-w-xs'>
-                <div className='label'>
-                  <span className='label-text'>Last Name</span>
-                </div>
-                <input type='text'
+              <div className="relative">
+                <UserIcon className="h-5 w-5 text-gray-400 absolute left-3 top-3.5" />
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  className="input input-bordered w-full pl-10"
                   value={lastName}
-                  className='input input-bordered w-full max-w-xs'
-                  onChange={(e) => setLastName(e.target.value)} />
-              </label>
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
             </>
-            }
+          )}
 
-
-            <label className='form-control w-full max-w-xs '>
-              <div className='label'>
-                <span className='label-text'>Email ID</span>
-              </div>
-              <input type='email'
-                value={emailId}
-                className='input input-bordered w-full max-w-xs'
-                onChange={(e) => setEmailId(e.target.value)}
-              />
-            </label>
-
-            <label className='form-control w-full max-w-xs'>
-              <div className='label'>
-                <span className='label-text'>Password</span>
-              </div>
-              <input type='password'
-                value={password}
-                className='input input-bordered w-full max-w-xs'
-                onChange={(e) => setPassword(e.target.value)} />
-            </label>
-
+          <div className="relative">
+            <EnvelopeIcon className="h-5 w-5 text-gray-400 absolute left-3 top-3.5" />
+            <input
+              type="email"
+              placeholder="Email"
+              className="input input-bordered w-full pl-10"
+              value={emailId}
+              onChange={(e) => setEmailId(e.target.value)}
+            />
           </div>
-          <p className="text-red-500">{error}</p>
-          <div className="card-actions justify-center">
-            <button className="btn btn-primary"
-              onClick={isLoginForm ? handleLogin : handleSignup}> {isLoginForm ? "Login" : "Signup"}</button>
+
+          <div className="relative">
+            <LockClosedIcon className="h-5 w-5 text-gray-400 absolute left-3 top-3.5" />
+            <input
+              type="password"
+              placeholder="Password"
+              className="input input-bordered w-full pl-10"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
+          <button
+            className="btn btn-primary w-full mt-2 hover:scale-105 transition-transform duration-200"
+            onClick={isLoginForm ? handleLogin : handleSignup}
+          >
+            {isLoginForm ? "Login" : "Signup"}
+          </button>
 
           <p
-            className=" m-auto mt-1 text-blue-600 hover:text-blue-800 cursor-pointer font-medium transition duration-200 ease-in-out hover:scale-105"
-            onClick={() => setIsLoginForm(value => !value)}
+            className="text-center mt-4 text-sm text-blue-600 hover:text-blue-800 cursor-pointer transition duration-150 ease-in-out"
+            onClick={() => setIsLoginForm((val) => !val)}
           >
             {isLoginForm
               ? "Don't have an account? Sign up here."
               : "Already have an account? Log in here."}
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
-
-  )
-}
+  );
+};
 
 export default Login;

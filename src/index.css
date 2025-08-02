@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swipe-left {
+  transform: translateX(-100%) rotate(-20deg);
+  opacity: 0;
+}
+.swipe-right {
+  transform: translateX(100%) rotate(20deg);
+  opacity: 0;
+}
