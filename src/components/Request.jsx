@@ -52,7 +52,7 @@ const Request = () => {
                 <p className="text-gray-500 mb-6">
                     You're all caught up! When someone wants to connect, their request will appear here.
                 </p>
-                <Link to="/">
+                <Link to="/feed">
                     <button className='bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300'>
                         Back to Homepage
                     </button>

@@ -19,7 +19,7 @@ const SubscriptionStatus = ({ membershipType }) => {
             <h2 className="font-semibold text-lg mb-2 text-gray-700">Your current plan:</h2>
             <p className="capitalize text-blue-600 font-mono text-xl">{membershipType}</p>
           </div>
-          <Link to="/">
+          <Link to="/feed">
             <button className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
               Back to Homepage
             </button>
