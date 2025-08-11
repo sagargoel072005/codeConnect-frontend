@@ -8,7 +8,7 @@ export default function GithubCallback() {
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get("code");
     if (code) {
-      axios.get(`/auth/github/callback?code=${code}`, { withCredentials: true })
+      axios.get(`/api/auth/github/callback?code=${code}`, { withCredentials: true })
         .then(() => {
           navigate("/profile?github=connected");
         })
