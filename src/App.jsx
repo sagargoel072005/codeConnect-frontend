@@ -20,6 +20,7 @@ import { createSocketConnection } from "./utils/socket";
 import VideoCall from "./components/VideoCall";
 import CodeConnectLandingPage from "./components/CodeConnectLandingPage";
 import UserProfilePage from "./components/UserProfilePage";
+import GithubCallback from "./components/GithubCallback";
 const socket = createSocketConnection();
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route element={<Body />}>
               <Route path="/feed" element={<Feed />} />
                       <Route path="/profile/:userId" element={<UserProfilePage />} />
+<Route path="/auth/github/callback" element={<GithubCallback />} />
 
               <Route path="/profile" element={<Profile />} />
               <Route path="/user/connections" element={<Connections />} />
