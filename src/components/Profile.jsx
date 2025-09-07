@@ -2,6 +2,7 @@ import EditProfile from './EditProfile';
 import GitHubIntegration from './GitHubIntegration';
 import PostEdit from './PostEdit';
 import { useSelector } from 'react-redux';
+import AIResumeBuilder from './AIResumeBuilder'
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
@@ -35,6 +36,10 @@ const Profile = () => {
         </h2>
         <GitHubIntegration />
       </section>
+
+<section>
+      <AIResumeBuilder />
+ </section>
 
       {/* Post Edit Section */}
       <section className="bg-white rounded-lg shadow-lg p-8 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
